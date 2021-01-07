@@ -1,0 +1,90 @@
+With HASHMAP
+------------------------
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        map<int,int> mp;
+        while(head!=nullptr){
+            mp[head->val]++;
+            head=head->next;
+        }
+        ListNode* dummy = new ListNode(-1);
+        ListNode* temp = dummy;
+        for(auto it:mp){
+            if(it.second==1){
+                temp->next = new ListNode(it.first);
+                temp=temp->next;
+            }
+        }
+        return dummy->next;
+    }
+};
+----------------------------------------
+
+WITHOUT HASHMAP
+----------------------------------------
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(head==nullptr){
+            return head;
+        }
+        ListNode* temp = head;
+        ListNode* dummy = new ListNode(-1);
+        dummy->next = head;
+        ListNode* cur = head,*prev=dummy,*forw=head->next;
+        while(cur!=nullptr){
+            if(forw!=nullptr&&cur->val==forw->val){
+                forw=forw->next;
+                bool enter=true;
+                while(forw!=nullptr){
+                    if(forw->val==cur->val){
+                        forw=forw->next;
+                        continue;
+                    }
+                    else{
+                        prev->next=forw;
+                        cur=forw;
+                        forw=forw->next;
+                        enter=false;
+                        break;
+                    }
+                }
+                if(enter==true){
+                    prev->next=nullptr;
+                    break;
+                }
+            }
+            else{
+                cur=cur->next;
+                if(forw!=nullptr) forw=forw->next;
+                prev=prev->next;
+            }
+        }
+        return dummy->next;
+    }
+};
+----------------------------------------
+
+
