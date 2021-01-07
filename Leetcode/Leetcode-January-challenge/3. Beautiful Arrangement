@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> vec;
+    int ans=0;
+    unordered_map<int,int> mp;
+    int countArrangement(int N) {
+        if(N==1){
+            return 1;
+        }
+        rec(N,1);
+        return ans;
+    }
+    void rec(int N,int index){
+        if(index==N+1){
+            ans++;
+            return;
+        }
+        for(int i=1;i<=N;i++){
+            if((i%index==0 || index%i==0) && mp[i]==0){
+                vec.push_back(i);
+                mp[i]=1;
+                rec(N,index+1);
+                mp[i]=0;
+                vec.erase(vec.end()-1);
+            }
+        }
+    }
+};
