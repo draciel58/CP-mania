@@ -1,0 +1,49 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int n = s.size();
+        if(n==0 || n==1){
+            return s;
+        }
+        if(n==2){
+            return s[0]==s[1]?s:s.substr(0,1);
+        }
+        int step,ans=0;
+        pair<int,int> mp;
+        for(int i=1;i<n;i++){
+            step=1;
+            int j,k;
+            for(j=i-1,k=i+1;j>=0&&j<n;j--,k++){
+                if(s[j]==s[k]){
+                    step+=2;
+                }
+                else{
+                    break;
+                }
+            }
+            if(step>ans){
+                ans=step;
+                mp.first=j+1;
+                mp.second=k-1;
+            }
+            if(s[i]==s[i-1]){
+                int j,k;
+                step=2;
+                for(j=i-2,k=i+1;j>=0&&k<n;j--,k++){
+                    if(s[j]==s[k]){
+                        step+=2;
+                    }
+                    else{
+                        break;
+                    }
+                }
+                if(step>ans){
+                    ans=step;
+                    mp.first=j+1;
+                    mp.second=k-1;
+                }
+            }
+        }
+        return s.substr(mp.first,mp.second-mp.first+1);
+    }
+};
