@@ -1,0 +1,45 @@
+class Solution {
+public:
+    bool check(int i,int j,int n,int m){
+        if(i>=0&&i<n&&j>=0&&j<m){
+            return true;
+        }
+        return false;
+    }
+    int minimumEffortPath(vector<vector<int>>& heights) {
+        int n = heights.size();
+        int m = heights[0].size();
+        if(n==1&&m==1){
+            return 0;
+        }
+        priority_queue<pair<int,pair<int,int> >,vector<pair<int,pair<int,int> > >, greater<pair<int,pair<int,int> >> > q;
+        q.push(make_pair(0,make_pair(0,0)));
+        vector<vector<int> > mp(n,vector<int> (m,INT_MAX));
+        int ans = INT_MAX;
+        int dirs[4][2] = {{1,0},{0,1},{-1,0},{0,-1}};
+        vector<vector<bool> > visited(n,vector<bool> (m,false));
+        mp[0][0]=0;
+        visited[0][0]=true;
+        while(!q.empty()){
+            int x = q.top().second.first;
+            int y = q.top().second.second;
+            q.pop();
+            for(int j=0;j<4;j++){
+                int r = x+dirs[j][0];
+                int c = y+dirs[j][1];
+                if(!check(r,c,n,m)) continue;   // to check the boundaries
+                if(mp[r][c]<=mp[x][y]) continue; // to check if the existing value is less than the new value
+                int temp = max(mp[x][y],abs(heights[r][c]-heights[x][y])); 
+                mp[r][c]=min(temp,mp[r][c]);  // to minimise the value
+                q.push(make_pair(mp[r][c],make_pair(r,c)));
+            }
+        }
+        // for(int i=0;i<n;i++){
+        //     for(int j=0;j<m;j++){
+        //         cout << mp[i][j] << " ";
+        //     }
+        //     cout << "\n";
+        // }
+        return mp[n-1][m-1];
+    }
+};
