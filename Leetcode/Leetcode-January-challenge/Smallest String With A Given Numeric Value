@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string getSmallestString(int n, int k) {
+        string st;
+        while(n>0){
+            int q = n-1;
+            if(q==0){
+                st+=char(96+k);
+                break;
+            }
+            if(26*q>(k-1)){
+                st+='a';
+                k--;
+            }
+            else{
+                st+=char(96+k-26*q);
+                k-=(k-26*q);
+            }
+            n--;
+        }
+        return st;
+    }
+};
