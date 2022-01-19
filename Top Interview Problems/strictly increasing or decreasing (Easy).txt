@@ -1,0 +1,34 @@
+bool solve(vector<int>& nums) {
+    int n = nums.size();
+
+    // to check if its stricly increasing
+
+    bool flag=true;
+    for(int i=1;i<n;i++){
+        if(nums[i]>nums[i-1]) continue;
+        else{
+            flag=false;
+            break;
+        }
+    }
+    if(flag == true){
+        return true;
+    }
+
+    // to check if its stricly decreasing
+
+    flag=true;
+    for(int i=1;i<n;i++){
+        if(nums[i]<nums[i-1]) continue;
+        else{
+            flag=false;
+            break;
+        }
+    }
+    if(flag == true){
+        return true;
+    }
+
+    return false;
+
+}
