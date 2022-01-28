@@ -1,0 +1,25 @@
+int solve(string s) {
+    int n = s.size();
+    if(n<=1) return n;
+    int ans=1;
+    for(int i=1;i<n;i++){
+        // to check for odd substring
+        int temp = 1;
+        for(int j=i-1,k=i+1;j>=0&&k<n;j--,k++){
+            if(s[j] == s[k]) temp+=2;
+            else break;
+        }
+        ans=max(ans,temp);
+
+        //to check for even substring
+        if(s[i] == s[i-1]){
+            temp = 2;
+            for(int j=i-2,k=i+1;j>=0&&k<n;j--,k++){
+                if(s[j] == s[k]) temp+=2;
+                else break;
+            }
+            ans=max(ans,temp);
+        }
+    }
+    return ans;
+}
