@@ -1,0 +1,22 @@
+bool dfs(int node,vector<vector<int>>& courses,vector<int>& color){
+    color[node]=1;
+    for(int j:courses[node]){
+        if(color[j] == 0) dfs(j,courses,color);
+        if(color[j] == 1) return true;
+    }
+    color[node]=2;
+    return false;
+}
+
+
+bool solve(vector<vector<int>>& courses) {
+    int n = courses.size();
+    vector<int> color(n,0);
+    for(int i=0;i<n;i++){
+        if(color[i] == 0){
+            bool flag = dfs(i,courses,color);
+            if(flag == true) return false;
+        }
+    }
+    return true;
+}
