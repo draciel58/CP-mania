@@ -1,0 +1,46 @@
+int solve(vector<int>& nums) {
+    /*int n = nums.size();
+    int ans=0;
+    bool flag=true;
+    for(int i=0;i<n;i++){
+        if(nums[i]>=0){
+            flag=false;
+            break;
+        }
+    }
+    if(flag == true){
+        return *max_element(nums.begin(),nums.end());
+    }
+    for(int i=0;i<n;i++){
+        int temp = nums[i];
+        ans=max(ans,temp);
+        for(int j=i+1;j<n;j++){
+            temp+=nums[j];
+            ans=max(ans,temp);
+        }
+    }
+    return ans;
+    */
+
+    // kadane's algorithm
+    int n = nums.size();
+    int ans=0;
+    bool flag=true;
+    for(int i=0;i<n;i++){
+        if(nums[i]>=0){
+            flag=false;
+            break;
+        }
+    }
+    if(flag == true){
+        return *max_element(nums.begin(),nums.end());
+    }
+    int mxh=0;
+    int msf=0;
+    for(int i=0;i<n;i++){
+        mxh=max(0,mxh+nums[i]);
+        msf=max(msf,mxh);
+    }
+    return msf;
+
+}
