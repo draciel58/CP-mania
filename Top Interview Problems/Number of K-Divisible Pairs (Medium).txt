@@ -1,0 +1,29 @@
+int solve(vector<int>& nums, int k) {
+    /*int n = nums.size();
+    int ans=0;
+    for(int i=0;i<n;i++){
+        for(int j=i+1;j<n;j++){
+            if((nums[i]+nums[j])%k == 0) ans++;
+        }
+    }
+    return ans;
+    */
+
+    
+    int n = nums.size();
+    int ans=0;
+    unordered_map<int,int> mp;
+    for(int i=0;i<n;i++){
+        nums[i] = nums[i]%k;
+    }
+    for(int i=0;i<n;i++){
+        if(nums[i] == 0){
+            ans+=mp[0];
+        }
+        if(mp.find(k-nums[i]) != mp.end()){
+            ans+=mp[k-nums[i]];
+        }
+        mp[nums[i]]++;
+    }
+    return ans;
+}
